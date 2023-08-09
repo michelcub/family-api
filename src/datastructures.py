@@ -9,28 +9,83 @@ update this file to implement the following already declared methods:
 from random import randint
 
 class FamilyStructure:
-    def __init__(self, last_name):
-        self.last_name = last_name
+    id = int
+    first_name = ""
+    last_name = ""
+    age = int
+    lucky_numbers = []
+    _members = []
+    
 
-        # example list of members
-        self._members = []
+    def __init__(self,last_name):
+        
+        self._members =[{
+            "id": self._generateId(),
+            "first_name": "John",
+            "last_name": last_name
+        }]
 
     # read-only: Use this method to generate random members ID's when adding members into the list
     def _generateId(self):
         return randint(0, 99999999)
 
     def add_member(self, member):
-        # fill this method and update the return
-        pass
+        try:
+            if not instance(member, dict):
+                raise TypeError("Member should be a dictionary")
+            if not member["first_name"] or not member["last_name"] or not member["age"] or not member["lucky_numbers"]:
+                raise ValueError("Member should have a data")
+            if not member["id"]:
+                member["id"] = self._generateId()
+
+            self._members.append(member)
+            for check_member in self._members:
+                if check_member == member:
+                    return ({'message': 'Member added successfully'}),200
+        except:
+            print("Error adding member")
 
     def delete_member(self, id):
-        # fill this method and update the return
-        pass
+        try:
+            if not id:
+                raise ValueError("Member should have a id")
+            for member in self._members:
+                if member["id"] == id:
+                    self._members.remove(member)
+                    return ({'message': 'Member deleted successfully'})
+            return ({'message': 'Member not found'})
+        except:
+            print("Error deleting member")
+
+    def update_member(self, id, member):
+        try:
+            if not id:
+                raise ValueError("Member should have a id")
+            if not isinstance(member, dict):
+                raise TypeError("Member should be a dictionary")
+            if not member["first_name"] or not member["last_name"] or not member["age"] or not member["lucky_numbers"]:
+                raise ValueError("Member should have a data")
+            for member in self._members:
+                if member["id"] == id:
+                    member["first_name"] = member["first_name"]
+                    member["last_name"] = member["last_name"]
+                    member["age"] = member["age"]
+                    member["lucky_numbers"] = member["lucky_numbers"]
+                    return ({'message': 'Member updated successfully'})
+            return ({'message': 'Member not found'})
+        except:
+            print("Error updating member")
 
     def get_member(self, id):
-        # fill this method and update the return
-        pass
+        try:
+            if not id:
+                raise ValueError("Member should have a id")
+            for member in self._members:
+                if member["id"] == id:
+                    return member
+            return ({'message': 'Member not found'})
+        except:
+            print("Error getting member")
 
-    # this method is done, it returns a list with all the family members
     def get_all_members(self):
         return self._members
