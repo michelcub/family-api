@@ -22,8 +22,22 @@ class FamilyStructure:
         self._members =[{
             "id": self._generateId(),
             "first_name": "John",
-            "last_name": last_name
-        }]
+            "last_name": last_name,
+        },
+                        {
+                "id": 2,
+                "first_name": "Jane",
+                "last_name": last_name,
+                "age": 35,
+                "lucky_numbers": [10, 14, 3],
+            },
+            {
+                "id": 3,
+                "first_name": "Jimmy",
+                "last_name": last_name,
+                "age": 5,
+                "lucky_numbers": [1],
+            },]
 
     # read-only: Use this method to generate random members ID's when adding members into the list
     def _generateId(self):
@@ -53,7 +67,7 @@ class FamilyStructure:
             for member in self._members:
                 if member["id"] == id:
                     self._members.remove(member)
-                    return ({'message': 'Member deleted successfully'})
+                    return ({'message': 'Member deleted successfully',"done":True})
             return ({'message': 'Member not found'})
         except:
             print("Error deleting member")
