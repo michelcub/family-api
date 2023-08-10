@@ -33,8 +33,11 @@ class FamilyStructure:
         try:
             if not member["first_name"] or not member["age"] or not member["lucky_numbers"]:
                 return ({'message': 'Member should have a data'}),400
-            if not member["id"]:
+            if not member.get("id"):
                 member["id"] = self._generateId()
+            for member_loop in self._members:
+                if member_loop["id"] == member["id"]:
+                    return ({'message': 'Member already exists'}),400
 
             self._members.append(member)
             for check_member in self._members:
