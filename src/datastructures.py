@@ -31,10 +31,8 @@ class FamilyStructure:
 
     def add_member(self, member):
         try:
-            if not instance(member, dict):
-                raise TypeError("Member should be a dictionary")
-            if not member["first_name"] or not member["last_name"] or not member["age"] or not member["lucky_numbers"]:
-                raise ValueError("Member should have a data")
+            if not member["first_name"] or not member["age"] or not member["lucky_numbers"]:
+                return ({'message': 'Member should have a data'}),400
             if not member["id"]:
                 member["id"] = self._generateId()
 
@@ -48,7 +46,7 @@ class FamilyStructure:
     def delete_member(self, id):
         try:
             if not id:
-                raise ValueError("Member should have a id")
+                return ({'message': 'Member should have a id'}),400
             for member in self._members:
                 if member["id"] == id:
                     self._members.remove(member)

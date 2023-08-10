@@ -48,8 +48,8 @@ def get_member(member_id):
 def add_member():
     member = request.json
     if member:
-        jackson_family.add_member(member)
-        return jsonify({"msg": "Member added"}), 200
+        response = jackson_family.add_member(member)
+        return jsonify(response), 200
     else:
         return jsonify({"msg": "Member not added"}), 400
 
